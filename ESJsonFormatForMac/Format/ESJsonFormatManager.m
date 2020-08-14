@@ -49,7 +49,11 @@
     NSString *typeStr = @"NSString";
     //判断大小写
     if ([ESUppercaseKeyWords containsObject:key] && [ESJsonFormatSetting defaultSetting].uppercaseKeyWordForId) {
-        key = [key uppercaseString];
+        if ([key isEqualToString:@"description"]) {
+            key = @"desc";
+        } else {
+            key = [key uppercaseString];
+        }
     }
     if ([value isKindOfClass:[NSString class]]) {
         return [NSString stringWithFormat:@"@property (nonatomic, %@) %@ *%@;",qualifierStr,typeStr,key];
