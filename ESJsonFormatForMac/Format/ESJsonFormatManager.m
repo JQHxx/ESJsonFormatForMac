@@ -307,10 +307,12 @@
         NSLog(@"=============================");
         if ([ESUppercaseKeyWords containsObject:key] && [ESJsonFormatSetting defaultSetting].uppercaseKeyWordForId) {
             
-            
-            [result appendFormat:@"@\"%@\":@\"%@\", ",[key uppercaseString],key];
+            if ([key isEqualToString:@"description"]) {
+                [result appendFormat:@"@\"%@\":@\"%@\", ",@"desc",key];
+            } else {
+               [result appendFormat:@"@\"%@\":@\"%@\", ",[key uppercaseString],key];
+            }
         }
-        
     }];
     
     if ([result hasSuffix:@", "]) {
