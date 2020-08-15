@@ -18,7 +18,8 @@
 #import "DataModel.h"
 #import "HttpRequestTool.h"
 #import "FileManager.h"
-@interface ESInputJsonController ()<NSTextViewDelegate,NSTableViewDataSource,NSTabViewDelegate,NSTextFieldDelegate,NSTextDelegate>
+
+@interface ESInputJsonController ()<NSTextViewDelegate,NSTableViewDataSource,NSTabViewDelegate,NSTextFieldDelegate,NSTextDelegate, NSTableViewDelegate>
 
 /**
  *  字段对应的类的名字[key->JSON字段 : value->类名(用户输入)]
@@ -234,6 +235,10 @@
     self.selectedRow = row;
     NSLog(@"self.selectedRow===%ld",(long)self.selectedRow);
     return YES;
+}
+
+- (void)tabView:(NSTabView *)tabView didSelectTabViewItem:(nullable NSTabViewItem *)tabViewItem {
+    
 }
 
 
@@ -467,6 +472,7 @@
 
     self.inputTextView.string = @"";
 }
+
 
 - (void)copyContent:(NSString *)str{
     

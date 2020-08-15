@@ -42,7 +42,7 @@
  *  @param value     JSON里面key对应的NSDiction或者NSArray
  *  @param classInfo 类信息
  *
- *  @return
+ *  @return NSString
  */
 + (NSString *)formatObjcWithKey:(NSString *)key value:(NSObject *)value classInfo:(ESClassInfo *)classInfo{
     NSString *qualifierStr = @"copy";
@@ -96,7 +96,16 @@
         if ([ESJsonFormatSetting defaultSetting].useGeneric && [ESUtils isXcode7AndLater]) {
             return [NSString stringWithFormat:@"@property (nonatomic, %@) %@%@ *%@;",qualifierStr,typeStr,genericTypeStr,key];
         }
-        return [NSString stringWithFormat:@"@property (nonatomic, %@) %@ *%@;",qualifierStr,typeStr,key];
+        /*
+        BOOL isYYModel = [[NSUserDefaults standardUserDefaults] boolForKey:@"isYYModel"];
+        if (isYYModel) {
+            return [NSString stringWithFormat:@"@property (nonatomic, %@) %@ *%@;",qualifierStr,typeStr,key];
+        } else {
+            return [NSString stringWithFormat:@"@property (nonatomic, %@) %@%@ *%@;",qualifierStr,typeStr,genericTypeStr,key];
+        }
+         */
+        return [NSString stringWithFormat:@"@property (nonatomic, %@) %@%@ *%@;",qualifierStr,typeStr,genericTypeStr,key];
+
     }else if ([value isKindOfClass:[NSDictionary class]]){
         qualifierStr = @"strong";
         ESClassInfo *childInfo = classInfo.propertyClassDic[key];
@@ -117,7 +126,7 @@
  *  @param value     JSON里面key对应的NSDiction或者NSArray
  *  @param classInfo 类信息
  *
- *  @return
+ *  @return NSString
  */
 + (NSString *)formatSwiftWithKey:(NSString *)key value:(NSObject *)value classInfo:(ESClassInfo *)classInfo{
     NSString *typeStr = @"String?";
@@ -208,7 +217,7 @@
  *
  *  @param classInfo 类信息
  *
- *  @return
+ *  @return NSString
  */
 + (NSString *)parseClassHeaderContentForOjbcWithClassInfo:(ESClassInfo *)classInfo{
     NSString *superClassString = [[NSUserDefaults standardUserDefaults] valueForKey:@"SuperClass"];
@@ -236,7 +245,7 @@
  *
  *  @param classInfo 类信息
  *
- *  @return
+ *  @return NSString
  */
 + (NSString *)parseClassContentForSwiftWithClassInfo:(ESClassInfo *)classInfo{
     NSString *superClassString = [[NSUserDefaults standardUserDefaults] valueForKey:@"SuperClass"];
@@ -263,7 +272,7 @@
  *
  *  @param classInfo 指定类信息
  *
- *  @return
+ *  @return NSString
  */
 + (NSString *)methodContentOfObjectClassInArrayWithClassInfo:(ESClassInfo *)classInfo{
     
@@ -341,7 +350,7 @@
  *  @param classInfo 类信息
  *  @param type      .h或者.m或者.swift
  *
- *  @return
+ *  @return NSString
  */
 + (NSString *)dealHeaderStrWithClassInfo:(ESClassInfo *)classInfo type:(NSString *)type{
     //模板文字
@@ -387,7 +396,7 @@
 /**
  *  返回模板信息里面日期字符串
  *
- *  @return
+ *  @return NSString
  */
 + (NSString *)dateStr{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
